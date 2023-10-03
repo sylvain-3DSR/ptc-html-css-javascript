@@ -37,26 +37,16 @@ class Particle {
         this.y += this.vy
         if (this.y > this.effect.height - this.radius || this.y < this.radius) this.vy *= -1
     }
-    reset(){
-        this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2)
-        this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2 )
-    }
 }
 
 class Effect {
-    constructor(canvas, context){
+    constructor(canvas){
         this.canvas = canvas
-        this.context = context
         this.width = this.canvas.width
         this.height = this.canvas.height
         this.particles = []
         this.numberOfParticles = 400
         this.createParticles()
-
-        window.addEventListener('resize', e => {
-            console.log(e.target.window.innerWidth)
-            this.resize(e.target.window.innerWidth, e.target.window.innerHeight)
-        })
     }
     createParticles() {
         for (let i = 0; i< this.numberOfParticles; i++){
@@ -92,24 +82,9 @@ class Effect {
             }
         }
     }
-    resize(width, height){
-        this.canvas.width = width
-        this.canvas.height = height
-        this.width = width
-        this.height = height
-        const gradient = ctx.createLinearGradient(0, 0, width, height)
-        gradient.addColorStop(0, 'white')
-        gradient.addColorStop(0.5, 'magenta')
-        gradient.addColorStop(1, 'blue')
-        this.context.fillStyle = gradient
-        this.context.strokeStyle = 'white'
-        this.particles.forEach(particle =>{
-            particle.reset()
-        })
-    }
 }
 
-const effect = new Effect(canvas, ctx)
+const effect = new Effect(canvas)
 //console.log(effect)
 
 
